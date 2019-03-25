@@ -86,6 +86,8 @@ def getWithModules(args, env):
 def package_as_war(app, env, war_path, war_zip_path, war_exclusion_list = None):
     if war_exclusion_list is None:
         war_exclusion_list = []
+    if war_inclusion_dict is None:
+        war_inclusion_dict = []
     app.check()
     modules = app.modules()
     classpath = app.getClasspath()
@@ -166,6 +168,17 @@ def package_as_war(app, env, war_path, war_zip_path, war_exclusion_list = None):
     if not os.path.exists(os.path.join(war_path, 'WEB-INF/resources')): os.mkdir(os.path.join(war_path, 'WEB-INF/resources'))
     shutil.copyfile(os.path.join(env["basedir"], 'resources/messages'), os.path.join(war_path, 'WEB-INF/resources/messages'))
 
+    for key in war_inclusion_dict:
+        src = key
+        dst = os.path.join(war_path, war_inclusion_dict[key])
+        if not os.path.isabs(src):
+            src = os.path.join(app.path, src)
+        if os.path.isdir(src):
+            shutil.copytree(src, dst, False, None)
+        else:
+            os.makedirs(dst)
+            shutil.copy(src, dst)
+    
     if war_zip_path:
         print "~ Creating zipped archive to %s ..." % (os.path.normpath(war_zip_path))
         if os.path.exists(war_zip_path):
@@ -179,6 +192,7 @@ def package_as_war(app, env, war_path, war_zip_path, war_exclusion_list = None):
                 continue
             for file in filenames:
                 if file.find('~') > -1 or file.startswith('.'):
+                    print("Skipping adding file to zipped archive for filename: %s" % file)
                     continue
                 zip.write(os.path.join(dirpath, file), os.path.join(dirpath[len(war_path):], file))
 

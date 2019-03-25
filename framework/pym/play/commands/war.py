@@ -22,8 +22,9 @@ def execute(**kargs):
     war_path = None
     war_zip_path = None
     war_exclusion_list = []
+    war_inclusion_dict = {}
     try:
-        optlist, args = getopt.getopt(args, 'o:', ['output=', 'zip','exclude='])
+        optlist, args = getopt.getopt(args, 'o:', ['output=', 'zip', 'exclude=', 'include='])
         for o, a in optlist:
             if o in ('-o', '--output'):
                 war_path = os.path.normpath(os.path.abspath(a))
@@ -35,6 +36,20 @@ def execute(**kargs):
                 print "~ Excluding these directories :"
                 for excluded in war_exclusion_list:
                     print "~  %s" %excluded
+            if o in ('--include'):
+                war_inclusion_array = a.split(' ')
+                print war_inclusion_array
+                for i in range(len(war_inclusion_array)):
+                    inclusion_pair = war_inclusion_array[i].split('#')
+                    if len(inclusion_pair) == 2:
+                        war_inclusion_dict[inclusion_pair[0]] = inclusion_pair[1]
+                    else:
+                        print("~ Invalid key->value pair: %s" % inclusion_pair)
+                        sys.exit(-1)
+                print "~ Including these files/directories:"
+                for key in war_inclusion_dict:
+                    print("%s -> %s" % (key, war_inclusion_dict[key]))
+                    
     except getopt.GetoptError, err:
         print "~ %s" % str(err)
         print "~ Please specify a path where to generate the WAR, using the -o or --output option."
@@ -69,7 +84,7 @@ def execute(**kargs):
         sys.exit(precompilation_result)
 
     # Package
-    package_as_war(app, env, war_path, war_zip_path, war_exclusion_list)
+    package_as_war(app, env, war_path, war_zip_path, war_exclusion_list, war_inclusion_dict)
 
     print "~ Done !"
     print "~"

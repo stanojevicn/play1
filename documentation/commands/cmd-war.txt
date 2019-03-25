@@ -33,3 +33,6 @@
 ~ Excludes a list of directories (separator is ':').
 ~ Example: --exclude .svn:tmp:logs:target
 ~
+~ --include:
+~ Includes given source_[file/directory]#destination_directory pairs into the WAR output path. Source can be a file or a directory while destination must be a directory!
+~ Example: --include "C:\Users\stano\Documents\OneDrive\Work\Fastrope\mhg-salesforce-sync-java\.ebextensions#.ebextensions pom.xml#WEB-INF/application/pom"
