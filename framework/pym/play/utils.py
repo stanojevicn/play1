@@ -83,7 +83,7 @@ def getWithModules(args, env):
     
     return md
 
-def package_as_war(app, env, war_path, war_zip_path, war_exclusion_list = None):
+def package_as_war(app, env, war_path, war_zip_path, war_exclusion_list = None, war_inclusion_dict = None):
     if war_exclusion_list is None:
         war_exclusion_list = []
     if war_inclusion_dict is None:
