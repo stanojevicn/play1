@@ -8,4 +8,4 @@ Refer to this section:
 ~ Includes given source_[file/directory]#destination_directory pairs into the WAR output path. Source can be a file or a directory while destination must be a directory!
 ~ Example: --include "C:\Users\stano\Documents\OneDrive\Work\Fastrope\mhg-salesforce-sync-java\.ebextensions#.ebextensions pom.xml#WEB-INF/application/pom"
 
-**For installation instruction refer to: https://github.com/playframework/play1**
+**For installation instructions refer to: https://github.com/playframework/play1**
