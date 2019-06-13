@@ -1,4 +1,4 @@
-h1. Fork of Play Framework 1.5 with added ability to include files in the build war
+h1. Fork of Play Framework 1.4 with added ability to include files in the build war
 
 Get additional info by typing the command: **play war help**
 
